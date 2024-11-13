@@ -17,7 +17,7 @@ export class AuthController {
     async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
         const user = await this.authService.validateUser(loginDto.email);
         if (!user) {
-            throw new UnauthorizedException('Email not found');
+            throw new UnauthorizedException('not found');
         }
         return { message: 'Login successful', user };
     }
