@@ -1,9 +1,18 @@
 import { Module } from '@nestjs/common';
-import { FriendRequestService } from './friend-request.service';
+import { MongooseModule } from '@nestjs/mongoose';
 import { FriendRequestController } from './friend-request.controller';
+import { FriendRequestService } from './friend-request.service';
+import { FriendRequest, FriendRequestSchema } from '../schemas/friend-request.schema';
+import { Channel, ChannelSchema } from '../schemas/channel.schema';
 
 @Module({
-  controllers: [FriendRequestController],
-  providers: [FriendRequestService],
+    imports: [
+        MongooseModule.forFeature([
+            { name: FriendRequest.name, schema: FriendRequestSchema },
+            { name: Channel.name, schema: ChannelSchema }
+        ])
+    ],
+    controllers: [FriendRequestController],
+    providers: [FriendRequestService]
 })
 export class FriendRequestModule {}

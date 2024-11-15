@@ -1,33 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body, Param, Delete } from '@nestjs/common';
 import { FriendRequestService } from './friend-request.service';
 import { CreateFriendRequestDto } from './dto/create-friend-request.dto';
 import { UpdateFriendRequestDto } from './dto/update-friend-request.dto';
 
-@Controller('friend-request')
+@Controller('friend-requests')
 export class FriendRequestController {
-  constructor(private readonly friendRequestService: FriendRequestService) {}
+    constructor(private readonly friendRequestService: FriendRequestService) {}
 
-  @Post()
-  create(@Body() createFriendRequestDto: CreateFriendRequestDto) {
-    return this.friendRequestService.create(createFriendRequestDto);
-  }
+    @Post()
+    async createRequest(@Body() createFriendRequestDto: CreateFriendRequestDto) {
+        return this.friendRequestService.createRequest(createFriendRequestDto);
+    }
 
-  @Get()
-  findAll() {
-    return this.friendRequestService.findAll();
-  }
+    @Put(':id')
+    async updateRequest(
+        @Param('id') id: string,
+        @Body() updateFriendRequestDto: UpdateFriendRequestDto
+    ) {
+        return this.friendRequestService.updateRequest(id, updateFriendRequestDto);
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.friendRequestService.findOne(+id);
-  }
+    @Get()
+    async getFriendRequests() {
+        return this.friendRequestService.getAllFriendRequests();
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFriendRequestDto: UpdateFriendRequestDto) {
-    return this.friendRequestService.update(+id, updateFriendRequestDto);
-  }
-
-  @Delete(':id')
+    @Get(':userId')
+    async getUserFriendRequests(@Param('userId') userId: string) {
+        return this.friendRequestService.getFriendRequests(userId);
+    }
+    @Delete(':id')
   remove(@Param('id') id: string) {
     return this.friendRequestService.remove(+id);
   }

@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AppGateway } from './app/app.gateway';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { FriendRequestModule } from './friend-request/friend-request.module';
 
 
 @Module({
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     ChannelModule,
     AuthModule,
+    FriendRequestModule
 ],
   controllers: [],
   providers: [AppGateway, ],
