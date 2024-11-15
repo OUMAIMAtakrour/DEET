@@ -5,6 +5,9 @@ import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { ChannelModule } from './channel/channel.module';
 import { UserModule } from './user/user.module';
+import { AppGateway } from './app/app.gateway';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -13,9 +16,10 @@ import { UserModule } from './user/user.module';
         autoCreate: true,
     }),
     UserModule,
-    ChannelModule
+    ChannelModule,
+    AuthModule,
 ],
   controllers: [],
-  providers: [],
+  providers: [AppGateway, ],
 })
 export class AppModule {}
