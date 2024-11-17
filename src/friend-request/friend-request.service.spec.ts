@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+ import { Test, TestingModule } from '@nestjs/testing';
 import { FriendRequestService } from './friend-request.service';
 
 describe('FriendRequestService', () => {

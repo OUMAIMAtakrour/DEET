@@ -6,6 +6,6 @@ import { IsEnum } from 'class-validator';
 import { RequestStatus } from '../../schemas/friend-request.schema';
 
 export class UpdateFriendRequestDto {
-    @IsEnum(RequestStatus)
-    status: RequestStatus;
+  @IsEnum(RequestStatus)
+  status: RequestStatus;
 }
