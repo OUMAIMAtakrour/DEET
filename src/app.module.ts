@@ -9,6 +9,8 @@ import { AppGateway } from './app/app.gateway';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
+import { MessagesModule } from './messages/messages.module';
+import { WebsocketGateway } from './app/websocket/websocket.gateway';
 
 
 @Module({
@@ -19,9 +21,10 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
     UserModule,
     ChannelModule,
     AuthModule,
-    FriendRequestModule
+    FriendRequestModule,
+    MessagesModule
 ],
   controllers: [],
-  providers: [AppGateway, ],
+  providers: [AppGateway, WebsocketGateway, ],
 })
 export class AppModule {}

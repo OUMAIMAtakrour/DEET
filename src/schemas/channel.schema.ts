@@ -4,7 +4,8 @@ import { User } from './user.schema';
 
 export enum ChannelType {
     DIRECT = 'direct',
-    GROUP = 'group'
+    GROUP = 'group',
+    CONVO ='convo'
 }
 
 export type ChannelDocument = Channel & Document;
@@ -15,7 +16,7 @@ export class Channel {
     type: ChannelType;
 
     @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-    participants: User[];
+    members: User[];
 
     @Prop({ type: String })
     name?: string;  

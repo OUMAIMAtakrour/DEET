@@ -47,8 +47,8 @@ export class FriendRequestService {
 
         if (updateFriendRequestDto.status === RequestStatus.ACCEPTED) {
             const newChannel = new this.channelModel({
-                type: ChannelType.DIRECT,
-                participants: [request.sender, request.receiver]
+                type: ChannelType.CONVO,
+                members: [request.sender, request.receiver]
             });
             await newChannel.save();
             return { request, channel: newChannel };
