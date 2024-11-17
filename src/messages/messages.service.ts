@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { Message,MessageDocument } from 'src/schemas/message.schema';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { ChannelService } from 'src/channel/channel.service';
 
 @Injectable()
 export class MessagesService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
-  }
+    constructor(
+        @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
+        private channelService: ChannelService
+    ) {}
 
-  findAll() {
-    return `This action returns all messages`;
-  }
+    async create(createMessageDto: CreateMessageDto) {
+        await this.channelService.findOne(createMessageDto.channelId, createMessageDto.userId);
 
-  findOne(id: number) {
-    return `This action returns a #${id} message`;
-  }
+        const newMessage = new this.messageModel({
+            content: createMessageDto.content,
+            channel: new Types.ObjectId(createMessageDto.channelId),
+            sender: new Types.ObjectId(createMessageDto.userId),
+        });
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
-  }
+        return (await newMessage.save()).populate(['sender', 'channel']);
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} message`;
-  }
+    async findByChannel(channelId: string, userId: string) {
+        await this.channelService.findOne(channelId, userId);
+
+        return this.messageModel
+            .find({ channel: new Types.ObjectId(channelId) })
+            .populate(['sender', 'channel'])
+            .sort({ createdAt: 1 })
+            .exec();
+    }
 }

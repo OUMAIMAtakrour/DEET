@@ -12,6 +12,7 @@ export type ChannelDocument = Channel & Document;
 
 @Schema({ timestamps: true })
 export class Channel {
+   
     @Prop({ type: String, enum: ChannelType, required: true })
     type: ChannelType;
 
